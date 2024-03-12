@@ -1,8 +1,12 @@
-NODE_API_URL = https://eth-mainnet.g.alchemy.com/v2/umxyzDOdIrQcJFQLvlke5EI9CtT2Ez3X
-BLOCK_NUMBER = 18793682
+NODE_API_URL = https://arb-mainnet.g.alchemy.com/v2/rL5tvZBCf8HiUyuB5nVj7vvEsPOe9XsE
+BLOCK_NUMBER = 187718310
+
 
 target:
-	forge test -vv --fork-url $(NODE_API_URL) --fork-block-number $(BLOCK_NUMBER)
+	forge test --fork-url $(NODE_API_URL) --fork-block-number $(BLOCK_NUMBER) -vv
 
-offline:
-	forge test -vv
+trace:
+	forge test --fork-url $(NODE_API_URL) --fork-block-number $(BLOCK_NUMBER) -vvvvv
+
+build:
+	forge build
