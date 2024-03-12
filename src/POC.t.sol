@@ -12,7 +12,7 @@ contract POCTest is POC {
   IERC20 weth = IERC20(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
 
   function setUp() public {
-    init(0xd6cAA884288Ae76e3531fDBe866af6c9C4B192Fd);
+    init(0x4E651524f24EA15Ea54391f07390B9edF3CF81f2);
   }
 
   function test_openTradeExists() public {
@@ -24,20 +24,20 @@ contract POCTest is POC {
   }
 
   function test_openPrice() public {
-    assertEq(getOpenPrice(), 35039342132800);
+    assertEq(getOpenPrice(), 40345456730000);
   }
 
   function test_POC() public {
-    uint investment = getOpenPrice() / 2;
+    uint investment = getOpenPrice();
     emit log_named_decimal_uint("Investment ($)", investment, 10);
 
     printTrade();
 
-    int priceChange = 3000; // basis points
+    int priceChange = -1500; // basis points
     uint price = getOpenPrice() * uint(10000 + priceChange) / 10000;
 
     uint balanceBefore = weth.balanceOf(sender);
-    closeTradeMarketCallback(price);
+    closeTradeMarketCallback(price, 39043485);
     uint balanceAfter = weth.balanceOf(sender);
 
     uint balanceDelta = balanceAfter - balanceBefore;

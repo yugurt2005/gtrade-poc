@@ -10,8 +10,7 @@ import "../test/Framework.sol";
 import {IExchange, IStore, ICallback, Trade, Data} from "./Interface.sol";
 
 /*
-https://arbiscan.io/tx/0x1e83963ca5589a1f7cec947ae8a06a4c55ab26cf7d0349a61954759bce6789b2
-https://arbiscan.io/tx/0xcd26d85d9c9b25467280808575ab057d73e13215097f326f25d56a9078f80fa0
+https://arbiscan.io/tx/0xd9f4a1cd9732f852b7b59c747a8045ee92a9bab000baa4927d8cc69d3856ee2a
 */
 
 contract POC is Framework {
@@ -33,7 +32,7 @@ contract POC is Framework {
     }
 
     function getOpenTradeExists() public view returns (bool) {
-        return store.openTrades(sender, 1, 0).leverage != 0;
+        return store.openTrades(sender, 1, 0).pair == 1;
     }
 
     function getOpenPrice() public view returns (uint) {
@@ -43,7 +42,7 @@ contract POC is Framework {
     function printTrade() public {
         Trade memory t = store.openTrades(sender, 1, 0);
         console.log("-----------------");
-        console.log("Trade Setup = ");
+        console.log("@ Trade Setup");
         emit log_named_decimal_uint("Price    ", t.openPrice, 10);
         emit log_named_decimal_uint("Size     ", t.positionSize, 18);
         emit log_named_decimal_uint("Leverage ", t.leverage, 0);
@@ -59,9 +58,9 @@ contract POC is Framework {
         vm.etch(address(0x64), code);
     }
 
-    function closeTradeMarketCallback(uint closePrice) public {
+    function closeTradeMarketCallback(uint closePrice, uint orderId) public {
         Data memory answer = Data({
-            orderId: 39034567,
+            orderId: orderId,
             price: closePrice,
             spreadP: 0,
             open: 100,
@@ -94,16 +93,16 @@ contract POC is Framework {
 
         bytes memory data = entry.data;
 
-        (, , uint price, , uint size, uint profit, uint transfer, ) = abi.decode(
+        (, , uint price, , uint size, int profit, uint transfer, ) = abi.decode(
             data,
-            (Trade, bool, uint, uint, uint, uint, uint, uint)
+            (Trade, bool, uint, uint, uint, int, uint, uint)
         );
 
         console.log("-----------------");
-        console.log("Post Trade Execution = ");
+        console.log("@ Trade Completion");
         emit log_named_decimal_uint("Price    ", price, 10);
         emit log_named_decimal_uint("Size     ", size, 18);
-        emit log_named_decimal_uint("Profit   ", profit, 10);
+        emit log_named_decimal_int("Profit   ", profit, 10);
         emit log_named_decimal_uint("Transfer ", transfer, 18);
         console.log("-----------------");
     }

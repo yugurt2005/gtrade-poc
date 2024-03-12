@@ -1,5 +1,5 @@
 NODE_API_URL = https://arb-mainnet.g.alchemy.com/v2/rL5tvZBCf8HiUyuB5nVj7vvEsPOe9XsE
-BLOCK_NUMBER = 187718310
+BLOCK_NUMBER = 189280845
 
 
 target:
