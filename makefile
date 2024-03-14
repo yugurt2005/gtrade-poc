@@ -1,4 +1,4 @@
-NODE_API_URL = YOUR_NODE_API_URL (e.g., alchemy)
+NODE_API_URL = https://arb-mainnet.g.alchemy.com/v2/rL5tvZBCf8HiUyuB5nVj7vvEsPOe9XsE
 BLOCK_NUMBER = 189280845
 
 

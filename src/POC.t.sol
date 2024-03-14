@@ -29,11 +29,10 @@ contract POCTest is POC {
 
   function test_POC() public {
     uint investment = getOpenPrice();
-    emit log_named_decimal_uint("Investment ($)", investment, 10);
 
     printTrade();
 
-    int priceChange = -1500; // basis points
+    int priceChange = -100; // basis points
     uint price = getOpenPrice() * uint(10000 + priceChange) / 10000;
 
     uint balanceBefore = weth.balanceOf(sender);
@@ -41,8 +40,6 @@ contract POCTest is POC {
     uint balanceAfter = weth.balanceOf(sender);
 
     uint balanceDelta = balanceAfter - balanceBefore;
-
-    emit log_named_decimal_uint("Balance Delta ($ETH)", balanceDelta, 18);
 
     int profit = (int(balanceDelta * price) - int(investment) * 1e18) / int(investment);
     emit log_named_decimal_int("Profit (%)", profit, 16);

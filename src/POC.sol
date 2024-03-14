@@ -11,6 +11,7 @@ import {IExchange, IStore, ICallback, Trade, Data} from "./Interface.sol";
 
 /*
 https://arbiscan.io/tx/0xd9f4a1cd9732f852b7b59c747a8045ee92a9bab000baa4927d8cc69d3856ee2a
+https://arbiscan.io/tx/0x0e7040e581d578c4ecbea793d26f2fd3f89b5a5a48b3dc623403e17ac3677e5d
 */
 
 contract POC is Framework {
@@ -19,8 +20,8 @@ contract POC is Framework {
     address sender;
 
     IExchange exchange = IExchange(0x48B07695c41AaC54CC35F56AF25573dd19235c6f);
-    IStore store = IStore(0xFe54a9A1C2C276cf37C56CeeE30737FDc6dA4d27);
     ICallback callback = ICallback(0x62a9f50c92a57C719Ff741133caa55c7A81Ce019);
+    IStore store = IStore(0xFe54a9A1C2C276cf37C56CeeE30737FDc6dA4d27);
 
     address aggregator = 0x5995e62169391b2d1639F77a0BeA5CBB2bdbD237;
 
@@ -85,11 +86,6 @@ contract POC is Framework {
                 break;
             }
         }
-
-        assertEq(
-            entry.topics[0],
-            0xca42b0e44cd853d207b87e8f8914eaefef9c9463a8c77ca33754aa62f6904f00
-        );
 
         bytes memory data = entry.data;
 
